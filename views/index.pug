@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  form.halfWidth
+      .form-group
+        label.form-control-label(for="example-text-input") Magnet Link
+        input#example-text-input.form-control.magnet(type="text" placeholder="Magnet:")
+      .form-group
+        button(type="button" class="btn btn-primary btn-lg torrentSubmit").noUi-marker-large Submit

@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    <!-- Favicon -->
+    link(href="/img/brand/favicon.png" rel="icon" type="image/png")
+
+    <!-- Fonts -->
+    link(href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet")
+
+    <!-- Icons -->
+    link(href="/vendor/nucleo/css/nucleo.css" rel="stylesheet")
+    link(href="/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet")
+
+    <!-- Argon CSS -->
+    link(type="text/css" href="/stylesheets/argon.min.css" rel="stylesheet")
+    // Core
+    script(src="/vendor/jquery/dist/jquery.min.js")
+     script(type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js")
+
+    script(src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js")
+    // Argon JS
+    script(src="/javascripts/argon.js")
+    script(src="/javascripts/main.js")
+
+  body
+    include ./partials/header
+    block content
