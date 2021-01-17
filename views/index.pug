@@ -7,3 +7,21 @@ block content
         input#example-text-input.form-control.magnet(type="text" placeholder="Magnet:")
       .form-group
         button(type="button" class="btn btn-primary btn-lg torrentSubmit").noUi-marker-large Submit
+
+  button(type="button" class="btn btn-primary btn-lg torrentView").noUi-marker-large View
+  div.halfWidth
+    p Magnet Contents:
+      ul#content
+      p Client Magnets:
+      ul#magnets
+        li N/A
+      p Client Stats:
+      ul#stats
+        li Progress: 0%
+        li downloadSpeed: 0 Byte/s
+        li ratio: 0
+      p Client Errors:
+      ul#errors
+        li N/A
+      video(autoplay="" src="" height="360px" controls="")
+
