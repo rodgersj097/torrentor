@@ -7,7 +7,16 @@ a {
 }
 
 .halfWidth {
-    width: 60%;
+    width: 78% !important;
     margin: auto;
+    padding: 80px;
+}
+
+.main{ 
+    margin-left: 250px
+}
+
+
+.mainDiv{ 
     padding: 40px;
 }

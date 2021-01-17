@@ -8,10 +8,24 @@ $(document).ready(function() {
                 data: { magnetLink: magnetLink }
             })
             .done(function(msg) {
-                alert("Downloading Torrent: " + msg);
+            var notification = alertify.notify('Downloading Torrent', 'success', 5, function(){  console.log('dismissed'); });
             });
     })
 
+    $('.delete').click(function(e){
+        e.preventDefault
+        var magnet_hash = $(this).parent().attr("data-hash");
+        $.ajax({
+            method: "get",
+            url: "/delete",
+            data:{
+                hash: magnet_hash
+            }
+        })
+        .done(function(msg) {
+            alert("Deleted Torrent: " + msg);
+        });
+    })
 
 $('.torrentView').click(function(e){
     e.preventDefault
@@ -30,7 +44,7 @@ $(function() {
 		//
 		//	1.	Set the base URL
 		//
-		var api = "";
+		var api = "/viewTorrents";
 
 		//
 		//	2.	Check every second if there is a new Magnet file in the client
@@ -315,7 +329,7 @@ $(function() {
 				//
 				check_for_client_stats();
 
-			}, 5000);
+			}, 1000);
 		}
 
 		//
@@ -342,7 +356,7 @@ $(function() {
 						//
 						//	1.	Clear the content of the UL
 						//
-						$("#errors").empty();
+						$("#errors").empty();1
 
 						//
 						//	2.	Display the error
@@ -401,4 +415,4 @@ $(function() {
 		//
 		//
 		return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-	}
+    }
