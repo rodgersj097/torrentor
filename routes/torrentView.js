@@ -5,11 +5,6 @@ let fs = require("fs")
 let path = require("path"); 
 let client = require('../webTorrent/webTorrent')
 
-let stats = {
-    progress : 0,
-    downloadspeed: 0,
-    ratio: 0
-}
 let error_message = ""
 
 
@@ -19,18 +14,12 @@ client.on('error', function(err) {
 
 });
 
-client.on('download', function(bytes){
-getTorrentProgress()
-    
-        stats = {
-            progress: Math.round(client.progress * 100 * 100) / 100,
-            downloadSpeed: client.downloadSpeed,
-            ratio: client.ratio
-        }
-})
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    res.render('torrentView',);
+   var data =  getTorrent()
+   console.log(data)
+    res.render('torrentView', {data:data} );
 });
 
 router.get('/list', function(req, res, next) {
@@ -57,7 +46,7 @@ router.get('/list', function(req, res, next) {
 });
 
 router.get('/stats', function(req, res, next) {
-
+   var  stats = getTorrentProgress()
 	res.status(200);
     res.json(stats);
     res.end()
@@ -98,28 +87,30 @@ router.get('/delete/:magnet', function(req, res, next) {
 });
 
 
-function getTorrentProgress (){ 
-
+ getTorrentProgress = ()=>{ 
     let torrents = client.torrents.reduce(function(array, data) {
 		array.push({
-			torrent: data
-		});
-
-		return array;
-
-    }, []);
-    var AllTorrentProgress = [] 
-    torrents.forEach(torrent => {
-       var torrentProgress = {
-           progress: torrent.progress , 
-           timeRemaining : torrent.timeRemaining, 
-           name: torrent.name
-
-
-       }
-       AllTorrentProgress.push(torrentProgress)
-    });
-    console.log(AllTorrentProgress)
-}
-
+            hash: data.infoHash, 
+            data: {
+                name : data.name,
+                progress: Math.round(data.progress * 100 * 100) / 100,
+                timeRemaining: data.timeRemaining *60 *60,
+                downloadSpeed: data.downloadSpeed,
+                hash: data.infoHash
+            }
+        });
+        return array;
+    }, [])
+    return torrents
+};
+getTorrent = ()=>{
+    let torrents = client.torrents.reduce(function(array, data) {
+		array.push({
+            hash: data.infoHash,
+            name: data.name
+        });
+        return array;
+    }, [])
+    return torrents
+};
 module.exports = router;

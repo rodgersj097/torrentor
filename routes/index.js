@@ -22,7 +22,9 @@ router.get('/getTorrents', async function(req, res, next) {
                 length: data.length
             })
         })
+
      })
+
     res.status(200)
     res.json(files)
 })

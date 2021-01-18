@@ -283,7 +283,7 @@ $(function() {
 
 				});
 
-			}, 1000)
+			}, 5000)
 		}
 
 		//
@@ -302,24 +302,17 @@ $(function() {
 				//	1.	Make a request to the API for fresh data.
 				//
 				$.get(api + '/stats', function(obj) {
+                    if(obj.length > 0 && (window.location.pathname == "/viewTorrents")){
+                        obj.forEach(torrent => {
+                                var tor =  $(`*[data-hash="${torrent.hash}"]`)[0];
+                            $(tor).find('#downloadSpeed')[0].textContent = format_bytes(torrent.data.downloadSpeed)
+                            $(tor).find('#timeRemaining')[0].textContent = millisToMinutesAndSeconds(torrent.data.timeRemaining)
+                            $(tor).find('#progress')[0].textContent = torrent.data.progress
+                            $(tor).find('#progressBar').css('width', torrent.data.progress)
+                        });
+                    } 
 
-					//
-					//	1.	Clear the content of the UL so we can refresh it
-					//		with new content.
-					//
-					$("#stats").empty();
-
-					//
-					//	2.	Format the response in a meaningful way
-					//
-					var li = "<li>Progress: " + obj.progress + "%</li>" +
-							 "<li>downloadSpeed: " + format_bytes(obj.downloadSpeed, 0) + "/s</li>" +
-							 "<li>ratio: " + obj.ratio + "</li>";
-
-					//
-					//	3.	Display the stats in the UL
-					//
-					$("#stats").append(li);
+		
 
 				});
 
@@ -329,7 +322,7 @@ $(function() {
 				//
 				check_for_client_stats();
 
-			}, 1000);
+			}, 5000);
 		}
 
 		//
@@ -373,7 +366,7 @@ $(function() {
 
 				});
 
-			}, 1000);
+			}, 5000);
 		}
 
 	});
@@ -416,3 +409,9 @@ $(function() {
 		//
 		return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
+	
+	function millisToMinutesAndSeconds(millis) {
+		var minutes = Math.floor(millis / 60000);
+		var seconds = ((millis % 60000) / 1000).toFixed(0);
+		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+	  }
