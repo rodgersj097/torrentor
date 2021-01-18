@@ -1,4 +1,4 @@
-extends layout 
+extends layout
 mixin tableRow(name, downloadSpeed, timeRemaining, progress, hash)
     tr(data-hash=`${hash}`)
               th(scope="row")
@@ -37,5 +37,6 @@ block content
           tbody.list#torrentList
             each torrent in data
                 +tableRow(torrent.name, 0,0,0, torrent.hash)
-            else 
+            else
                 p There are no torrents
+
