@@ -1,9 +1,52 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const User = require('../model/user');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+router.get('/', (req, res) => {
+    res.render('login')
+})
+router.get('/signup', (req,res)=>{
+  res.render('signup')
+})
 
-module.exports = router;
+router.post('/signin', function (req, res, next) {
+    passport.authenticate('local', function (err, user, info) {
+        console.log(req.body)
+        if (err) { return next(err) }
+        if (!user) {
+            console.log(info)
+            return res.redirect('/login')
+        }
+        req.logIn(user, function (err) {
+            if (err) { return next(err) }
+            return res.redirect('/')// res.redirect('/users' + user.username)
+        })
+    })(req, res, next)
+})
+
+router.post('/', (req, res, next) => {
+  console.log(req)
+    console.log('starting register')
+    User.register(
+        new User({ username: req.body.username, email: req.body.email }),
+        req.body.password,
+        function (err, account) {
+            if (err) {
+                console.log(err)
+                return res.render('login', { account: account })
+            }
+
+            passport.authenticate('local')(req, res, function () {
+                res.redirect('/')
+            })
+        })
+})
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        res.redirect('/')
+    })
+})
+
+module.exports = router; 

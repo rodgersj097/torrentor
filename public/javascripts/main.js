@@ -38,6 +38,8 @@ $(document).ready(function() {
             });
     })
 
+    
+
 })
 $(function() {
     var socket = io();
@@ -74,7 +76,7 @@ $(function() {
             socket.emit('error', (response) => {
 
 
-                if (message) {
+                if (response.message) {
 
                     $("#errors").empty();
                     1

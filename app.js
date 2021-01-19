@@ -8,10 +8,45 @@ var socketapi = require("./socket/socketFile");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var torrentViewRouter = require('./routes/torrentView.js')
+var mongoose = require("mongoose");
 
+const session = require('express-session')
+const passport = require('passport')
+const localStrategy = require('passport-local').Strategy;
+const User = require('./model/user')
 var app = express();
 
-
+mongoose.connect(
+    "mongodb+srv://rodgersAdmin:BZ4zF0U6WUAmi7by@cluster0.cp927.mongodb.net/torentor?retryWrites=true&w=majority",
+    { useNewUrlParser: true,
+        useUnifiedTopology: true  }
+  );
+  var db = mongoose.connection;
+  db.on("error", err => console.log(err));
+  db.on("open", () => console.log("Connection to MongoDB"));
+  //add socket io to the res variable
+  
+  app.use(
+    session({
+      secret: 'dffgjhsdfhawj234ywryhrghs',
+      resave: false,
+      saveUninitialized: true
+    })
+  );
+  app.use(passport.initialize())
+  app.use(passport.session())
+  
+  app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.isAuthenticated()
+    next()
+  })
+  app.use((req, res, next) => {
+    res.locals.user = req.user
+    next()
+  })
+  passport.use(new localStrategy(User.authenticate()))
+  passport.serializeUser(User.serializeUser());
+  passport.deserializeUser(User.deserializeUser());
 var client = new WebTorrent();
 app.set('client', client)
     // view engine setup
@@ -23,6 +58,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

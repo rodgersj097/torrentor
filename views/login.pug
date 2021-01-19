@@ -1,0 +1,36 @@
+extends layout 
+block content
+    div.main-content.purple
+        .container.pt-8.pb-5
+            .row.justify-content-center
+                .col-lg-5.col-md-7
+                    .card.bg-secondary.border-0.mb-0
+                        .card-body.px-lg-5.py-lg-5
+                            .text-center.text-muted.mb-4
+                                small sign in with credentials
+                            form(role="form" method="post" action="/signin")
+                                .form-group.mb-3
+                                    .input-group.input-group-merge.input-group-alternative
+                                        .input-group-prepend
+                                            span.input-group-text
+                                                i.ni.ni-email-83
+                                                input.form-control(placeholder="Email" type="email")#email
+                                .form-group
+                                    .input-group.input-group-merge.input-group-alternative
+                                        .input-group-prepend
+                                            span.input-group-text
+                                                i.ni.ni-lock-circle-open
+                                                input.form-control(placeholder="Password" type="password")#pass
+                                .custom-control.custom-control-alternative.custom-checkbox
+                                    input#customCheckLogin.custom-control-input(type="checkbox")
+                                    label.custom-control-label(for="customCheckLogin")
+                                        span.text-muted Remember me
+                                .text-center
+                                    button.btn.btn-primary.my-4(type="submit")#signIn Sign in
+                    .row.mt-3
+                        .col-6
+                            a.text-light(href="#")
+                                small Forgot password?
+                        .col-6.text-right
+                            a.text-light(href="/users/signup")
+                                small Create new account
