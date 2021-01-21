@@ -7,8 +7,17 @@ let client = require('../webTorrent/webTorrent')
 const torrentApi = require('../config/torrent')
 
 
+function loggedIn(req, res, next) {
+    if (req.user) {
+        next()
+    } else {
+        res.redirect('/users/')
+    }
+}
+
+
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', loggedIn, function(req, res, next) {
     var data = torrentApi.getTorrent()
     console.log(data)
     res.render('torrentView', { data: data });
@@ -19,7 +28,7 @@ router.get('/', function(req, res, next) {
 //
 //	return 		<-	A a string with the error
 //
-router.get('/errors', function(req, res, next) {
+router.get('/errors', loggedIn, function(req, res, next) {
 
     res.status(200);
     res.json(error_message);
@@ -27,7 +36,7 @@ router.get('/errors', function(req, res, next) {
 
 });
 
-router.get('/delete/:magnet', function(req, res, next) {
+router.get('/delete/:magnet', loggedIn, function(req, res, next) {
 
     //
     //	1.	Extract the magnet Hash and save it in a meaningful variable.

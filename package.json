@@ -23,6 +23,7 @@
         "passport-local-mongoose": "^6.1.0",
         "path": "^0.12.7",
         "pug": "2.0.0-beta11",
+        "session": "^0.1.0",
         "socket.io": "^3.1.0",
         "webtorrent": "^0.112.0",
         "webtorrent-cli": "^3.2.1"

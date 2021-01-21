@@ -1,4 +1,4 @@
-extends layout 
+extends layout
 block content
     div.main-content.purple
         .container.pt-8.pb-5
@@ -8,35 +8,35 @@ block content
                         .card-body.px-lg-5.py-lg-5
                             .text-center.text-muted.mb-4
                                 small sign in with credentials
-                            form(role="form" method="post" action="/users/")
+                            form()
                                 .form-group.mb-3
                                     .input-group.input-group-merge.input-group-alternative
                                         .input-group-prepend
                                             span.input-group-text
                                                 i.ni.ni-email-83
-                                            input.form-control(placeholder="Email" type="email")#email
+                                            input.form-control(placeholder="Email" type="email" name="email")#email
                                 .form-group.mb-3
                                     .input-group.input-group-merge.input-group-alternative
                                         .input-group-prepend
                                             span.input-group-text
                                                 i.ni.ni-email-83
-                                            input.form-control(placeholder="Username" type="username")#username
+                                            input.form-control(placeholder="Username" type="text" name="username")#username
                                 .form-group
                                     .input-group.input-group-merge.input-group-alternative
                                         .input-group-prepend
                                             span.input-group-text
                                                 i.ni.ni-lock-circle-open
-                                            input.form-control(placeholder="Password" type="password")#pass
+                                            input.form-control(placeholder="Password" type="password" name="pass")#pass
                                 .custom-control.custom-control-alternative.custom-checkbox
                                     input#customCheckLogin.custom-control-input(type="checkbox")
                                     label.custom-control-label(for="customCheckLogin")
                                         span.text-muted Remember me
                                 .text-center
-                                    button.btn.btn-primary.my-4(type="submit")#signUp Sign in
+                                    button.btn.btn-primary.my-4(type="button")#signUp Sign Up
                     .row.mt-3
                         .col-6
                             a.text-light(href="#")
                                 small Forgot password?
                         .col-6.text-right
                             a.text-light(href="/users/")
-                                small Create new account
+                                small Sign in

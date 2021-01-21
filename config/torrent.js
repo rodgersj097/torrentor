@@ -6,16 +6,19 @@ client.on('error', function(err) {
 });
 exports.getTorrentProgress = () => {
     let torrents = client.torrents.reduce(function(array, data) {
-        array.push({
-            hash: data.infoHash,
-            data: {
-                name: data.name,
-                progress: Math.round(data.progress * 100 * 100) / 100,
-                timeRemaining: data.timeRemaining * 60 * 60,
-                downloadSpeed: data.downloadSpeed,
-                hash: data.infoHash
-            }
-        });
+        var progress = Math.round(data.progress * 100 * 100) / 100
+        if (progress !== 100) {
+            array.push({
+                hash: data.infoHash,
+                data: {
+                    name: data.name,
+                    progress: progress,
+                    timeRemaining: data.timeRemaining * 60 * 60,
+                    downloadSpeed: data.downloadSpeed,
+                    hash: data.infoHash
+                }
+            });
+        }
         return array;
     }, [])
     return torrents

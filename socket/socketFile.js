@@ -11,7 +11,6 @@ const socketapi = {
 io.on("connection", function(socket) {
     console.log("A user connected");
     socket.on('getStats', (callback) => {
-        console.log('getting stats')
         callback({
             obj: torrent.getTorrentProgress()
         })

@@ -8,7 +8,7 @@ $(document).ready(function() {
                 data: { magnetLink: magnetLink }
             })
             .done(function(msg) {
-                var notification = alertify.notify('Downloading Torrent', 'success', 5, function() { console.log('dismissed'); });
+                var notification = alertify.notify(msg.msg, msg.status, 10, function() { console.log('dismissed'); });
             });
     })
 
@@ -37,10 +37,53 @@ $(document).ready(function() {
                 alert("Torrent: " + msg);
             });
     })
+    $('#signUp').click(function() {
+        var email = $('#email').val()
+        var username = $('#username').val()
+        var pass = $('#pass').val()
+        $.ajax({
+                method: "POST",
+                url: "/users/",
+                dataType: 'json',
+                data: {
+                    email: email,
+                    username: username,
+                    pass: pass
+                }
+            })
+            .done(function(msg) {
+                if (msg.msg) {
+                    var notification = alertify.notify(msg.msg, 'error', 10, function() { console.log('dismissed'); });
 
-    
+                } else {
+                    window.location.href = msg.route
+                }
+
+            })
+    })
+
+
+
+    $('#signIn').click(function() {
+        var username = $('#username').val()
+        var pass = $('#pass').val()
+        $.ajax({
+                method: "POST",
+                url: "/users/signin",
+                dataType: 'json',
+                data: {
+                    username: username,
+                    password: pass
+                }
+            })
+            .done(function(msg) {
+                window.location.href = msg.route
+            })
+    })
 
 })
+
+
 $(function() {
     var socket = io();
 

@@ -13,13 +13,13 @@ mixin tableRow(name, downloadSpeed, timeRemaining, progress, hash)
                   span.completion.mr-2#progress= progress
                   div
                     .progress
-                      .progress-bar.bg-warning#progressBar(role="progressbar" aria-valuenow=`${progress}` aria-valuemin="0" aria-valuemax="100" style=`width:${progress}% `)
+                      .progress-bar.bg-warning#progressBar(role="progressbar" aria-valuenow=`${progress}` aria-valuemin="0" aria-valuemax="100" style=`width:${progress}%`)
               td.text-right
                 .dropdown
                   a.btn.btn-sm.btn-icon-only.text-light(href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
                     i.fas.fa-ellipsis-v
                   .dropdown-menu.dropdown-menu-right.dropdown-menu-arrow
-                    a.dropdown-item(href="#" data-hash="") Delete
+                    a.dropdown-item(href=`/veiwTorrents/delete/${hash}`) Delete
 
 
 block content
