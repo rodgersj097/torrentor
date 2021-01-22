@@ -1,5 +1,6 @@
 body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    height: 100%;
 }
 
 a {
@@ -12,15 +13,17 @@ a {
     padding: 80px;
 }
 
-.main{ 
-    margin-left: 250px
-}
-
-
-.mainDiv{ 
+.mainDiv {
     padding: 40px;
 }
 
-.purple{
-    background-color: #825ee4 ;
+.purple {
+    background-color: #825ee4;
+    height: 100vh;
+}
+
+@media (min-width: 1200px) {
+    .main {
+        margin-left: 250px;
+    }
 }

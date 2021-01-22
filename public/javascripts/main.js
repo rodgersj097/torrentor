@@ -78,8 +78,10 @@ $(document).ready(function() {
             })
             .done(function(msg) {
                 window.location.href = msg.route
+
             })
     })
+
 
 })
 
