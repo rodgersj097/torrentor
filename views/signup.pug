@@ -8,7 +8,7 @@ block content
                         .card-body.px-lg-5.py-lg-5
                             .text-center.text-muted.mb-4
                                 small sign in with credentials
-                            form()
+                            form(action="/users/" method="post")
                                 .form-group.mb-3
                                     .input-group.input-group-merge.input-group-alternative
                                         .input-group-prepend
@@ -26,13 +26,13 @@ block content
                                         .input-group-prepend
                                             span.input-group-text
                                                 i.ni.ni-lock-circle-open
-                                            input.form-control(placeholder="Password" type="password" name="pass")#pass
+                                            input.form-control(placeholder="Password" type="password" name="password")#pass
                                 .custom-control.custom-control-alternative.custom-checkbox
                                     input#customCheckLogin.custom-control-input(type="checkbox")
                                     label.custom-control-label(for="customCheckLogin")
                                         span.text-muted Remember me
                                 .text-center
-                                    button.btn.btn-primary.my-4(type="button")#signUp Sign Up
+                                    button.btn.btn-primary.my-4(type="submit")#signUp Sign Up
                     .row.mt-3
                         .col-6
                             a.text-light(href="#")

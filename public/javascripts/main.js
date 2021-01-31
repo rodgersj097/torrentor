@@ -1,8 +1,8 @@
-$(document).ready(function() {
-    $('.torrentSubmit').click(function(e) {
+jQuery(document).ready(function() {
+    jQuery('.torrentSubmit').click(function(e) {
         e.preventDefault()
-        var magnetLink = $('.magnet')[0].value;
-        $.ajax({
+        var magnetLink = jQuery('.magnet')[0].value;
+        jQuery.ajax({
                 method: "get",
                 url: "/getTorrents",
                 data: { magnetLink: magnetLink }
@@ -12,10 +12,10 @@ $(document).ready(function() {
             });
     })
 
-    $('.delete').click(function(e) {
+    jQuery('.delete').click(function(e) {
         e.preventDefault
-        var magnet_hash = $(this).parent().attr("data-hash");
-        $.ajax({
+        var magnet_hash = jQuery(this).parent().attr("data-hash");
+        jQuery.ajax({
                 method: "get",
                 url: "/delete",
                 data: {
@@ -27,9 +27,9 @@ $(document).ready(function() {
             });
     })
 
-    $('.torrentView').click(function(e) {
+    jQuery('.torrentView').click(function(e) {
         e.preventDefault
-        $.ajax({
+        jQuery.ajax({
                 method: "get",
                 url: "/list",
             })
@@ -37,11 +37,11 @@ $(document).ready(function() {
                 alert("Torrent: " + msg);
             });
     })
-    $('#signUp').click(function() {
-        var email = $('#email').val()
-        var username = $('#username').val()
-        var pass = $('#pass').val()
-        $.ajax({
+    /*jQuery('#signUp').click(function() {
+        var email = jQuery('#email').val()
+        var username = jQuery('#username').val()
+        var pass = jQuery('#pass').val()
+        jQuery.ajax({
                 method: "POST",
                 url: "/users/",
                 dataType: 'json',
@@ -60,14 +60,14 @@ $(document).ready(function() {
                 }
 
             })
-    })
+    })*/
 
 
 
-    $('#signIn').click(function() {
-        var username = $('#username').val()
-        var pass = $('#pass').val()
-        $.ajax({
+    jQuery('#signIn').click(function() {
+        var username = jQuery('#username').val()
+        var pass = jQuery('#pass').val()
+        jQuery.ajax({
                 method: "POST",
                 url: "/users/signin",
                 dataType: 'json',
@@ -86,7 +86,7 @@ $(document).ready(function() {
 })
 
 
-$(function() {
+jQuery(function() {
     var socket = io();
 
     check_for_client_stats();
@@ -100,11 +100,11 @@ $(function() {
 
                 if (response.obj.length > 0 && (window.location.pathname == "/viewTorrents")) {
                     response.obj.forEach(torrent => {
-                        var tor = $(`*[data-hash="${torrent.hash}"]`)[0];
-                        $(tor).find('#downloadSpeed')[0].textContent = format_bytes(torrent.data.downloadSpeed)
-                        $(tor).find('#timeRemaining')[0].textContent = millisToMinutesAndSeconds(torrent.data.timeRemaining)
-                        $(tor).find('#progress')[0].textContent = torrent.data.progress
-                        $(tor).find('#progressBar').css('width', torrent.data.progress)
+                        var tor = jQuery(`*[data-hash="${torrent.hash}"]`)[0];
+                        jQuery(tor).find('#downloadSpeed')[0].textContent = format_bytes(torrent.data.downloadSpeed)
+                        jQuery(tor).find('#timeRemaining')[0].textContent = millisToMinutesAndSeconds(torrent.data.timeRemaining)
+                        jQuery(tor).find('#progress')[0].textContent = torrent.data.progress
+                        jQuery(tor).find('#progressBar').css('width', torrent.data.progress)
                     });
                 }
             });
@@ -123,9 +123,9 @@ $(function() {
 
                 if (response.message) {
 
-                    $("#errors").empty();
-                    1
-                    $("#errors").append('<li class="error">' + message + '</li>');
+                    jQuery("#errors").empty();
+                    
+                    jQuery("#errors").append('<li class="error">' + message + '</li>');
 
                 }
 

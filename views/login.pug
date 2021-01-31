@@ -8,25 +8,25 @@ block content
                         .card-body.px-lg-5.py-lg-5
                             .text-center.text-muted.mb-4
                                 small sign in with credentials
-                            form(role="form" )
+                            form( action="/users/signin" method="post" )
                                 .form-group.mb-3
                                     .input-group.input-group-merge.input-group-alternative
                                         .input-group-prepend
                                             span.input-group-text
                                                 i.ni.ni-email-83
-                                                input.form-control(placeholder="Username" type="Text")#username
+                                                input.form-control(placeholder="Username" type="Text" name="username")#username
                                 .form-group
                                     .input-group.input-group-merge.input-group-alternative
                                         .input-group-prepend
                                             span.input-group-text
                                                 i.ni.ni-lock-circle-open
-                                                input.form-control(placeholder="Password" type="password")#pass
+                                                input.form-control(placeholder="Password" type="password" name="password")#pass
                                 .custom-control.custom-control-alternative.custom-checkbox
                                     input#customCheckLogin.custom-control-input(type="checkbox")
                                     label.custom-control-label(for="customCheckLogin")
                                         span.text-muted Remember me
                                 .text-center
-                                    button.btn.btn-primary.my-4(type="button")#signIn Sign in
+                                    button.btn.btn-primary.my-4(type="submit")#signIn Sign in
                     .row.mt-3
                         .col-6
                             a.text-light(href="#")

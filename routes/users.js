@@ -6,38 +6,40 @@ const User = require('../model/user');
 router.get('/', (req, res) => {
     res.render('login')
 })
-router.get('/signup', (req, res) => {
-    res.render('signup')
+router.get('/signup', (req,res)=>{
+  res.render('signup')
 })
 
-router.post('/signin', function(req, res, next) {
-
-    passport.authenticate('local', function(err, user, info) {
+router.post('/signin', function (req, res, next) {
+  console.log(req.body)
+    passport.authenticate('local', function (err, user, info) {
+        console.log(user)
         if (err) { return next(err) }
         if (!user) {
             console.log(info)
-            return res.json({ msg: '/users' })
+            return res.redirect('/')
         }
-        req.logIn(user, function(err) {
+        req.logIn(user, function (err) {
             if (err) { return next(err) }
-            return res.json({ route: '/' }) // res.redirect('/users' + user.username)
+            return res.redirect('/')// res.redirect('/users' + user.username)
         })
     })(req, res, next)
 })
 
 router.post('/', (req, res, next) => {
     console.log('starting register')
+    console.log(req.body)
     User.register(
         new User({ username: req.body.username, email: req.body.email }),
-        req.body.pass,
-        function(err, account) {
+        req.body.password,
+        function (err, account) {
             if (err) {
                 console.log(err)
-                return res.json({ route: '/users/signup', msg: err.message })
+                return res.render('login', { account: account })
             }
 
-            passport.authenticate('local')(req, res, function() {
-                res.json({ route: '/' })
+            passport.authenticate('local')(req, res, function () {
+                res.redirect('/')
             })
         })
 })
@@ -48,4 +50,4 @@ router.get('/logout', (req, res) => {
     })
 })
 
-module.exports = router;
+module.exports = router; 
