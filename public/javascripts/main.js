@@ -81,7 +81,13 @@ jQuery(document).ready(function() {
 
             })
     })
-
+    var socket = io();
+    $('torrentSearch').click(function() {
+        var term = $('.searchTerm').val();
+        socket.emit('searchTorrent', (response) => {
+            console.log(response)
+        })
+    })
 
 })
 

@@ -9,6 +9,7 @@
     "dependencies": {
         "@creative-tim-official/argon-dashboard-free": "^1.2.0",
         "body-parser": "^1.19.0",
+        "cheerio": "^1.0.0-rc.5",
         "cookie-parser": "~1.4.4",
         "cookies": "^0.8.0",
         "debug": "~2.6.9",
@@ -24,6 +25,8 @@
         "passport-local-mongoose": "^6.1.0",
         "path": "^0.12.7",
         "pug": "2.0.0-beta11",
+        "request": "^2.88.2",
+        "request-promise": "^4.2.6",
         "session": "^0.1.0",
         "socket.io": "^3.1.0",
         "webtorrent": "^0.112.0",
