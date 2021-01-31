@@ -1,5 +1,6 @@
 const io = require("socket.io")();
 const torrent = require('../config/torrent')
+const search = require('../config/searchTorrents')
 const socketapi = {
     io: io
 };
@@ -19,6 +20,12 @@ io.on("connection", function(socket) {
     socket.on('error', (callback) => {
         callback({
             error_message: torrent.getErrors()
+        })
+    })
+
+    socket.on('searchTorrent', (callback, term) => {
+        callback({
+            data: search.searchTorrent(term)
         })
     })
 });

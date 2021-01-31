@@ -1,0 +1,48 @@
+extends layout
+mixin tableRow(name, downloadSpeed, timeRemaining, progress, hash)
+    tr(data-hash=`${hash}`)
+              th(scope="row")
+                span.name.mb-0.text-sm#name= name
+              td.budget#downloadSpeed= downloadSpeed
+              td
+                span.badge.badge-dot.mr-4
+                  i.bg-warning
+                  span.status#timeRemaining= timeRemaining
+              td
+                .d-flex.align-items-center
+                  span.completion.mr-2#progress= progress
+                  div
+                    .progress
+                      .progress-bar.bg-warning#progressBar(role="progressbar" aria-valuenow=`${progress}` aria-valuemin="0" aria-valuemax="100" style=`width:${progress}%`)
+              td.text-right
+                .dropdown
+                  a.btn.btn-sm.btn-icon-only.text-light(href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+                    i.fas.fa-ellipsis-v
+                  .dropdown-menu.dropdown-menu-right.dropdown-menu-arrow
+                    a.dropdown-item(href=`/veiwTorrents/delete/${hash}`) Delete
+
+
+block content
+    div.main-content.mainDiv
+    form.halfWidth
+      .form-group
+        label.form-control-label(for="example-text-input") Search for torrents
+        input#example-text-input.form-control.searchTerm(type="text" placeholder="Search Torrent:")
+      .form-group
+        button(type="button" class="btn btn-primary btn-lg torrentSearch").noUi-marker-large Search
+    .table-responsive.halfWidth
+      div
+        table.table.align-items-center
+          thead.thead-light
+            tr
+              th.sort(scope="col" data-sort="name") Torrent
+              th.sort(scope="col" data-sort="budget") Download Speed
+              th.sort(scope="col" data-sort="status") Time Remaining
+              th.sort(scope="col" data-sort="completion") Progress
+              th(scope="col")
+          tbody.list#torrentList
+            each torrent in data
+                +tableRow(torrent.name, 0,0,0, torrent.hash)
+            else
+                p There are no torrents
+
