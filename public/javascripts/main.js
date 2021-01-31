@@ -82,13 +82,30 @@ jQuery(document).ready(function() {
             })
     })
     var socket = io();
-    $('torrentSearch').click(function() {
+    $('.torrentSearch').click(function() {
         var term = $('.searchTerm').val();
-        socket.emit('searchTorrent', (response) => {
-            console.log(response)
+        socket.emit('searchTorrent', term, (response) => {
+           response.data.forEach(o => {
+               $('#torrentList').append(o)
+               var downloadButtons = document.querySelectorAll('.download');
+               downloadButtons.forEach((button)=>{ 
+                button.addEventListener('click', function(){
+                    var magnetLink = button.dataset.magnet;
+                    jQuery.ajax({
+                            method: "get",
+                            url: "/getTorrents",
+                            data: { magnetLink: magnetLink }
+                        })
+                        .done(function(msg) {
+                            var notification = alertify.notify(msg.msg, msg.status, 10, function() { console.log('dismissed'); });
+                        });
+                })
+            });     
+           });
         })
     })
 
+    
 })
 
 
@@ -187,3 +204,4 @@ function millisToMinutesAndSeconds(millis) {
     var seconds = ((millis % 60000) / 1000).toFixed(0);
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
+

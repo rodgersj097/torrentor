@@ -6,7 +6,11 @@ const socketapi = {
 };
 
 
-
+function searchPromise(term){
+    return new Promise((resolve)=>{
+        resolve(search.searchTorrent(term))
+    })
+}
 
 // Add your socket.io logic here!
 io.on("connection", function(socket) {
@@ -23,9 +27,10 @@ io.on("connection", function(socket) {
         })
     })
 
-    socket.on('searchTorrent', (callback, term) => {
+    socket.on('searchTorrent', async (data, callback) => {
+        console.log(data)
         callback({
-            data: search.searchTorrent(term)
+            data: await searchPromise(data)
         })
     })
 });
