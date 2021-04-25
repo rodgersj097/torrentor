@@ -16,13 +16,13 @@ mixin tableRow(title, size, seeds, magnet)
 
 block content
     div.main-content.mainDiv
-    form.halfWidth
+    form.halfWidth#searchForm
       .form-group
         label.form-control-label(for="example-text-input") Search for torrents
         input#example-text-input.form-control.searchTerm(type="text" placeholder="Search Torrent:")
       .form-group
         button(type="button" class="btn btn-primary btn-lg torrentSearch").noUi-marker-large Search
-    .table-responsive.halfWidth
+    .table-responsive.halfWidth.torrentTable
       div
         table.table.align-items-center
           thead.thead-light

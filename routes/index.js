@@ -36,7 +36,7 @@ router.get('/getTorrents', loggedInAndTorrent, async function(req, res, next) {
 
     let magnetLink = req.query.magnetLink;
     let files = [];
-    await client.add(magnetLink, { path: 'D:\\Vuze' }, function(torrent) {
+    await client.add(magnetLink, { path: '/opts/plexmedia/' }, function(torrent) {
         torrent.files.forEach(function(data) {
             files.push({
                 name: data.name,

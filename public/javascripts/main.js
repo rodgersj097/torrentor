@@ -82,13 +82,33 @@ jQuery(document).ready(function() {
             })
     })
     var socket = io();
-    $('.torrentSearch').click(function() {
-        var term = $('.searchTerm').val();
+    $('.torrentSearch').click(function(){
+        searchTorrent()
+        $('.torrentTable').LoadingOverlay("show")
+    }
+    )
+    $('#searchForm').submit(function(e){
+        e.preventDefault()
+        console.log(e)
+        if( e.keyCode == 13){
+            searchTorrent();
+            $('.torrentTable').LoadingOverlay("show");
+        }
+    })
+})
+
+
+function searchTorrent(){
+    var socket = io();
+    var term = $('.searchTerm').val();
         socket.emit('searchTorrent', term, (response) => {
+            $('#torrentList').empty()
            response.data.forEach(o => {
+            $('.torrentTable').LoadingOverlay("hide");
                $('#torrentList').append(o)
-               var downloadButtons = document.querySelectorAll('.download');
-               downloadButtons.forEach((button)=>{ 
+           });
+            var downloadButtons = document.querySelectorAll('.download');
+               downloadButtons.forEach((button)=>{
                 button.addEventListener('click', function(){
                     var magnetLink = button.dataset.magnet;
                     jQuery.ajax({
@@ -100,14 +120,9 @@ jQuery(document).ready(function() {
                             var notification = alertify.notify(msg.msg, msg.status, 10, function() { console.log('dismissed'); });
                         });
                 })
-            });     
-           });
+            });
         })
-    })
-
-    
-})
-
+    }
 
 jQuery(function() {
     var socket = io();
