@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var searchTorrents = require('../config/searchTorrents')
-function loggedIn(req, res, next) {
+function loggedInAndTorrent(req, res, next) {
     if (req.user) {
-        next()
+        if (req.user.canTorrent == 1) {
+            next()
+        } else {
+            res.json({ msg: 'Woah!!!! cool your boots. You need approval for this. Contact Jacob if he forgot to approve you or if your new.', status: 'error' })
+        }
     } else {
         res.redirect('/users/')
     }
@@ -11,7 +15,7 @@ function loggedIn(req, res, next) {
 
 
 /* GET users listing. */
-router.get('/', loggedIn, function(req, res, next) {
+router.get('/', loggedInAndTorrent, function(req, res, next) {
     data = {}
     res.render('searchTorrents', data);
 });
