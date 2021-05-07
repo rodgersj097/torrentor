@@ -1,5 +1,5 @@
 extends layout
-mixin tableRow(name, downloadSpeed, timeRemaining, progress, hash)
+mixin tableRow(name, downloadSpeed, timeRemaining, seedsConnected, progress, hash)
     tr(data-hash=`${hash}`)
               th(scope="row")
                 span.name.mb-0.text-sm#name= name
@@ -8,6 +8,9 @@ mixin tableRow(name, downloadSpeed, timeRemaining, progress, hash)
                 span.badge.badge-dot.mr-4
                   i.bg-warning
                   span.status#timeRemaining= timeRemaining
+              td
+                span.badge.badge-dot.mr-4
+                  span.status#seedsConnected= seedsConnected
               td
                 .d-flex.align-items-center
                   span.completion.mr-2#progress= progress
@@ -32,11 +35,12 @@ block content
               th.sort(scope="col" data-sort="name") Torrent
               th.sort(scope="col" data-sort="budget") Download Speed
               th.sort(scope="col" data-sort="status") Time Remaining
+              th.sort(scope="col" data-sort="status") Seeds Connected
               th.sort(scope="col" data-sort="completion") Progress
               th(scope="col")
           tbody.list#torrentList
             each torrent in data
-                +tableRow(torrent.name, 0,0,0, torrent.hash)
+                +tableRow(torrent.name, 0,0,0,0, torrent.hash)
             else
                 p There are no torrents
 
