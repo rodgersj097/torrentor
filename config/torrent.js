@@ -13,7 +13,8 @@ exports.getTorrentProgress = () => {
                 data: {
                     name: data.name,
                     progress: progress,
-                    timeRemaining: data.timeRemaining * 60 * 60,
+                    timeRemaining: data.timeRemaining,
+                    maxPeers: data.numPeers,
                     downloadSpeed: data.downloadSpeed,
                     hash: data.infoHash
                 }

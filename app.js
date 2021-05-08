@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var torrentViewRouter = require('./routes/torrentView.js')
 var seatchTorrentRouter = require('./routes/searchTorrents')
+var adminRouter = require('./routes/admin');
 var mongoose = require("mongoose");
 var bodyParser = require('body-parser')
 const session = require('express-session')
@@ -69,6 +70,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/viewTorrents', torrentViewRouter)
 app.use('/searchTorrents', seatchTorrentRouter)
+app.use('/gateway', adminRouter)
     // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));

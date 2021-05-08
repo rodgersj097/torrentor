@@ -26,7 +26,7 @@ function loggedInAndTorrent(req, res, next) {
 }
 /* GET home page. */
 router.get('/', loggedIn, function(req, res, next) {
-    res.render('index', { title: 'Jacob Torrentor' });
+    res.render('index', { title: 'Jacobs Torrentor' });
 });
 let client = require('../webTorrent/webTorrent')
 
@@ -36,7 +36,7 @@ router.get('/getTorrents', loggedInAndTorrent, async function(req, res, next) {
 
     let magnetLink = req.query.magnetLink;
     let files = [];
-    await client.add(magnetLink, { path: '/opts/plexmedia/' }, function(torrent) {
+    await client.add(magnetLink, { path: '/opt/plexmedia/' }, function(torrent) {
         torrent.files.forEach(function(data) {
             files.push({
                 name: data.name,

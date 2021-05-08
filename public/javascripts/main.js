@@ -28,39 +28,39 @@ jQuery(document).ready(function() {
     })
 
     jQuery('.torrentView').click(function(e) {
-        e.preventDefault
-        jQuery.ajax({
-                method: "get",
-                url: "/list",
-            })
-            .done(function(msg) {
-                alert("Torrent: " + msg);
-            });
-    })
-    /*jQuery('#signUp').click(function() {
-        var email = jQuery('#email').val()
-        var username = jQuery('#username').val()
-        var pass = jQuery('#pass').val()
-        jQuery.ajax({
-                method: "POST",
-                url: "/users/",
-                dataType: 'json',
-                data: {
-                    email: email,
-                    username: username,
-                    pass: pass
-                }
-            })
-            .done(function(msg) {
-                if (msg.msg) {
-                    var notification = alertify.notify(msg.msg, 'error', 10, function() { console.log('dismissed'); });
+            e.preventDefault
+            jQuery.ajax({
+                    method: "get",
+                    url: "/list",
+                })
+                .done(function(msg) {
+                    alert("Torrent: " + msg);
+                });
+        })
+        /*jQuery('#signUp').click(function() {
+            var email = jQuery('#email').val()
+            var username = jQuery('#username').val()
+            var pass = jQuery('#pass').val()
+            jQuery.ajax({
+                    method: "POST",
+                    url: "/users/",
+                    dataType: 'json',
+                    data: {
+                        email: email,
+                        username: username,
+                        pass: pass
+                    }
+                })
+                .done(function(msg) {
+                    if (msg.msg) {
+                        var notification = alertify.notify(msg.msg, 'error', 10, function() { console.log('dismissed'); });
 
-                } else {
-                    window.location.href = msg.route
-                }
+                    } else {
+                        window.location.href = msg.route
+                    }
 
-            })
-    })*/
+                })
+        })*/
 
 
 
@@ -82,15 +82,14 @@ jQuery(document).ready(function() {
             })
     })
     var socket = io();
-    $('.torrentSearch').click(function(){
+    $('.torrentSearch').click(function() {
         searchTorrent()
         $('.torrentTable').LoadingOverlay("show")
-    }
-    )
-    $('#searchForm').submit(function(e){
+    })
+    $('#searchForm').submit(function(e) {
         e.preventDefault()
         console.log(e)
-        if( e.keyCode == 13){
+        if (e.keyCode == 13) {
             searchTorrent();
             $('.torrentTable').LoadingOverlay("show");
         }
@@ -98,31 +97,31 @@ jQuery(document).ready(function() {
 })
 
 
-function searchTorrent(){
+function searchTorrent() {
     var socket = io();
     var term = $('.searchTerm').val();
-        socket.emit('searchTorrent', term, (response) => {
-            $('#torrentList').empty()
-           response.data.forEach(o => {
+    socket.emit('searchTorrent', term, (response) => {
+        $('#torrentList').empty()
+        response.data.forEach(o => {
             $('.torrentTable').LoadingOverlay("hide");
-               $('#torrentList').append(o)
-           });
-            var downloadButtons = document.querySelectorAll('.download');
-               downloadButtons.forEach((button)=>{
-                button.addEventListener('click', function(){
-                    var magnetLink = button.dataset.magnet;
-                    jQuery.ajax({
-                            method: "get",
-                            url: "/getTorrents",
-                            data: { magnetLink: magnetLink }
-                        })
-                        .done(function(msg) {
-                            var notification = alertify.notify(msg.msg, msg.status, 10, function() { console.log('dismissed'); });
-                        });
-                })
-            });
-        })
-    }
+            $('#torrentList').append(o)
+        });
+        var downloadButtons = document.querySelectorAll('.download');
+        downloadButtons.forEach((button) => {
+            button.addEventListener('click', function() {
+                var magnetLink = button.dataset.magnet;
+                jQuery.ajax({
+                        method: "get",
+                        url: "/getTorrents",
+                        data: { magnetLink: magnetLink }
+                    })
+                    .done(function(msg) {
+                        var notification = alertify.notify(msg.msg, msg.status, 10, function() { console.log('dismissed'); });
+                    });
+            })
+        });
+    })
+}
 
 jQuery(function() {
     var socket = io();
@@ -141,8 +140,10 @@ jQuery(function() {
                         var tor = jQuery(`*[data-hash="${torrent.hash}"]`)[0];
                         jQuery(tor).find('#downloadSpeed')[0].textContent = format_bytes(torrent.data.downloadSpeed)
                         jQuery(tor).find('#timeRemaining')[0].textContent = millisToMinutesAndSeconds(torrent.data.timeRemaining)
+                        jQuery(tor).find('#seedsConnected')[0].textContent = torrent.data.maxPeers
                         jQuery(tor).find('#progress')[0].textContent = torrent.data.progress
                         jQuery(tor).find('#progressBar').css('width', torrent.data.progress)
+                        console.log(torrent.data)
                     });
                 }
             });
@@ -162,7 +163,7 @@ jQuery(function() {
                 if (response.message) {
 
                     jQuery("#errors").empty();
-                    
+
                     jQuery("#errors").append('<li class="error">' + message + '</li>');
 
                 }
@@ -217,6 +218,17 @@ function format_bytes(bytes, decimals) {
 function millisToMinutesAndSeconds(millis) {
     var minutes = Math.floor(millis / 60000);
     var seconds = ((millis % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    if (minutes > 60) {
+        var mh = minutesToHoursMinutes(minutes)
+    }
+    return (mh !== undefined) ? mh : (minutes + "min : " + (seconds < 10 ? '0' : '') + seconds + 'secs');
 }
 
+function minutesToHoursMinutes(min) {
+    var num = min
+    var hours = (num / 60);
+    var rhours = Math.floor(hours);
+    var minutes = (hours - rhours) * 60;
+    var rminutes = Math.round(minutes);
+    return rhours + " hour(s) and " + rminutes + " minute(s).";
+}
